@@ -22,6 +22,4 @@ python app.py
 
 ```
 
-<video width="720" controls>
-  <source src="videos/demo.mp4" type="video_9/mp4">
-</video>
+![Alt Text](videos/video_9.mp4)
