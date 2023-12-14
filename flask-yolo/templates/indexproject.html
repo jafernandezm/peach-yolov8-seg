@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ObjectDetection-YOLOv8</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
+
+    <style>
+        body {
+            font-family: 'Helvetica', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header.feature-box.right {
+            background-color:#3498db;
+            color: white;
+            height: 80px;
+            padding: 10px;
+            text-align: right;
+        }
+
+        header.feature-box.below {
+            height: 600px;
+            background-color: #3498db;
+            background-image: url("../static/images/1.png");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+       
+
+
+        .details {
+            height: 80px;
+            margin: 40px;
+            padding: 20px;
+            font-size: 24px;
+            background-color: #ecf0f1;
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .features {
+            background: #ecf0f1;
+            color: #34495e;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .features figure {
+            margin: 20px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .features figure img {
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px;
+            letter-spacing: 1px;
+        }
+
+        .subpart2 figure img {
+            border-radius: 4%;
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+        }
+
+        .contactpage {
+            margin: 20px;
+        }
+
+        #textbox, #textboxes {
+            font-size: 18pt;
+            height: 42px;
+            width: 100%;
+            max-width: 600px;
+            margin: 10px 0;
+            padding: 8px;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            text-align: center;
+            padding: 20px;
+            color: white;
+            font-size: 20px;
+        }
+    </style>
+  
+
+</head>
+<body>
+    <header class="feature-box right">
+        <nav>
+            <ul>
+                <li><a href="/home">Inicio</a></li>
+                <li><a href="/FrontPage">Video</a></li>
+                <li><a href="/webcam">Webcams</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <header class="feature-box below">
+
+    </header>
+
+    <section class="details">
+
+    </section>
+    
+    <section class="features">
+        <figure>
+            <img src="../static/images/1.png" alt="YOLOv8 Results 1">
+            <figcaption>YOLOv8 Results 1</figcaption>
+        </figure>
+        <figure>
+            <img src="../static/images/2.png" alt="YOLOv8 Results 2">
+            <figcaption>YOLOv8 Results 2</figcaption>
+        </figure>
+        <figure>
+            <img src="../static/images/3.png" alt="YOLOv8 Results 3">
+            <figcaption>YOLOv8 Results 3</figcaption>
+        </figure>
+    </section>
+
+    <div class="main">
+
+    </div>
+
+    <div class="contactpage">
+
+    </div>
+
+    <footer>
+        &copy; 2023 ObjectDetection-YOLOv8
+    </footer>
+</body>
+</html>

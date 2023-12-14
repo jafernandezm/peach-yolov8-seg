@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Video</title>
+    <style>
+        
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/video.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tabla.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+</head>
+
+<body>
+    <header class="feature-box right">
+        <nav>
+            <ul>
+                <li><a href="/home">Inicio</a></li>
+                <li><a href="/FrontPage">Video</a></li>
+                <li><a href="/webcam">Webcams</a></li>
+                <li><a href="/table">table</a></li>
+            </ul>
+        </nav>
+    </header>
+    <header class="feature-box top">
+        <h1><strong>Detección de Objetos utilizando YOLOv8</strong></h1>
+    </header>
+    <header class="feature-box second">
+        <h1><strong>Video de Salida</strong></h1>
+    </header>
+    <section class="col-sm ">
+        <img src="{{ url_for('video') }}" alt="Upload video">
+    </section>
+    <section>
+        <div class="new">
+            <form method='POST' enctype="multipart/form-data"
+                style="align-content: center; text-align: center;display: flex;">
+                {{form.hidden_tag()}}
+                {{form.file(class_="custom-file-input")}}
+
+                <div>
+                    <button type="submit" name="favorite" value="x" class="btnCustom">
+                        Subir Video
+                    </button>
+                </div>
+            </form>
+        </div>
+        <br>
+
+        <div>
+            <button id="export-button">Exportar a Excel</button>
+
+            <table id="detections-table">
+                <thead>
+                    <tr>
+                        <th>Clase</th>
+                        <th>Confianza</th>
+                        <th>X1</th>
+                        <th>Y1</th>
+                        <th>X2</th>
+                        <th>Y2</th>
+                        <th>Latitud</th>
+                        <th>Longitud</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <script>
+                // Función para actualizar la tabla mediante AJAX
+                function updateTable() {
+                    fetch('/get_data')
+                        .then(response => response.json())
+                        .then(data => {
+                            // Limpiar la tabla antes de agregar nuevos datos
+                            var tableBody = document.getElementById('detections-table').getElementsByTagName('tbody')[0];
+                            tableBody.innerHTML = '';
+
+                            // Llenar la tabla con los nuevos datos
+                            data.forEach(function (detection) {
+                                var row = tableBody.insertRow();
+                                row.insertCell(0).textContent = detection['clase'];
+                                row.insertCell(1).textContent = detection['confianza'];
+                                row.insertCell(2).textContent = detection['x1'];
+                                row.insertCell(3).textContent = detection['y1'];
+                                row.insertCell(4).textContent = detection['x2'];
+                                row.insertCell(5).textContent = detection['y2'];
+                                row.insertCell(6).textContent = detection['latitud'];
+                                row.insertCell(7).textContent = detection['longitud'];
+                            });
+                        })
+                        .catch(error => console.error('Error fetching data:', error));
+                }
+
+                // Llamar a la función para cargar la tabla al cargar la página
+                updateTable();
+
+                // Configurar un temporizador para actualizar la tabla cada segundo
+                setInterval(updateTable, 1000); // Actualizar cada 1000 milisegundos (1 segundo)
+
+                function exportToExcel() {
+                    fetch('/get_data')
+                        .then(response => response.json())
+                        .then(data => {
+                            const ws = XLSX.utils.json_to_sheet(data);
+                            const wb = XLSX.utils.book_new();
+                            XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+                            XLSX.writeFile(wb, 'exported_data.xlsx');
+                        })
+                        .catch(error => console.error('Error fetching data:', error));
+                }
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Llamar a la función para cargar la tabla al cargar la página
+                    updateTable();
+
+                    // Configurar un temporizador para actualizar la tabla cada segundo
+                    setInterval(updateTable, 1000);
+                    // Agregar un evento al botón de exportación
+                    document.getElementById('export-button').addEventListener('click', exportToExcel);
+                });
+            </script>
+        </div>
+
+    </section>
+
+</body>
+
+</html>

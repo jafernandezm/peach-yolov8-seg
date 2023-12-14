@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>tabla</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/video.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tabla.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+</head>
+<body>
+    <header class="feature-box right">
+        <nav>
+            <ul>
+                <li><a href="/home">Inicio</a></li>
+                <li><a href="/FrontPage">Video</a></li>
+                <li><a href="/webcam">Webcams</a></li>
+                <li><a href="/table">table</a></li>
+            </ul>
+        </nav>
+    </header>
+    <header class="feature-box second">
+        <h1><strong>Tabla</strong></h1>
+    </header>
+  
+    <section>
+        <button id="export-button">Exportar a Excel</button>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Clase</th>
+                    <th>Confianza</th>
+                    <th>X1</th>
+                    <th>Y1</th>
+                    <th>X2</th>
+                    <th>Y2</th>
+                    <th>Latitud</th>
+                    <th>Longitud</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for detection in detections %}
+                <tr>
+                    <td>{{ detection.clase }}</td>
+                    <td>{{ detection.confianza }}</td>
+                    <td>{{ detection.x1 }}</td>
+                    <td>{{ detection.y1 }}</td>
+                    <td>{{ detection.x2 }}</td>
+                    <td>{{ detection.y2 }}</td>
+                    <td>{{detection.latitud}}</td>
+                    <td>{{detection.longitud}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+        <script>
+            function exportToExcel() {
+                // Obtener todos los datos de la tabla
+                const table = document.querySelector('table');
+                const rows = Array.from(table.querySelectorAll('tr'));
+    
+                // Crear una matriz de datos
+                const data = rows.map(row => Array.from(row.children).map(cell => cell.textContent));
+    
+                // Crear un objeto de hoja de cálculo
+                const ws = XLSX.utils.aoa_to_sheet(data);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    
+                // Descargar el archivo Excel
+                XLSX.writeFile(wb, 'exported_data.xlsx');
+            }
+    
+            // Agregar un evento al botón de exportación
+            document.getElementById('export-button').addEventListener('click', exportToExcel);
+        </script>
+    </section>
+</body>
+</html>

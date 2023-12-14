@@ -1,0 +1,10 @@
+
+
+# Ignorar la carpeta de archivos generados por python
+flask-yolo/__pycache__
+# Ignorar archivos de respaldo
+*~
+
+# Ignorar archivos temporales
+*.tmp
+
