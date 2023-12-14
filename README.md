@@ -22,4 +22,7 @@ python app.py
 
 ```
 
-![Alt Text](videos/video_9.mp4)
+<video width="720" height="340" controls>
+  <source src="videos/video_9.mp4" type="video/mp4">
+  Tu navegador no soporta el elemento de video.
+</video>
